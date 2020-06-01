@@ -1,0 +1,68 @@
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class FileIO {
+
+	public static final String fileSeparator = System.getProperty("file.separator");
+	public static final String lineSeparator = System.getProperty("line.separator");
+
+	public static ArrayList<String> readFile(String filename) {
+		Scanner scan = null;
+
+		try {
+			ArrayList<String> fileData = new ArrayList<>();
+
+			FileReader reader = new FileReader(filename);
+			scan = new Scanner(reader);
+
+			while (scan.hasNextLine()) {
+				String data = scan.nextLine();
+				fileData.add(data);
+			}
+
+			return fileData;
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (scan != null) {
+				scan.close();
+			}
+		}
+
+		return null;
+
+	}
+
+	public static void writeFile(String filename, ArrayList<String> fileData) {
+		FileWriter writer = null;
+
+		try {
+			writer = new FileWriter(filename);
+
+			for (String line : fileData) {
+				writer.write(line);
+				writer.write(lineSeparator);
+			}
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if (writer != null) {
+					writer.close();
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+	}
+
+}
